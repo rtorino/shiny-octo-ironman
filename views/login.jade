@@ -1,0 +1,28 @@
+extends layout
+
+block content
+	div.row-fluid
+		div.col-md-6.col-md-offset-3
+			div.panel.panel-default
+				div.panel-heading
+					div.panel-title
+						| Sign in
+				div.panel-body
+					form.form-horizontal(role='form', action='/login', method='post')
+						div.form-group
+							label.col-lg-2.control-label(for='email') Email
+							div.col-lg-10
+								input#email.form-control(type='email', placeholder='Email')
+						div.form-group
+							label.col-lg-2.control-label(for='password') Password
+							div.col-lg-10
+								input#password.form-control(type='password', placeholder='Password')
+						div.form-group
+							div.col-lg-offset-2.col-lg-10
+								div.checkbox
+									label
+										input(type='checkbox') 
+										| Remember me
+						div.form-group
+							div.col-lg-offset-2.col-lg-10
+								button.btn.btn-default(type='submit') Sign in

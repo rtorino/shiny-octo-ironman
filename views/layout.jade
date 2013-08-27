@@ -1,0 +1,37 @@
+!!! 5
+html(lang='en')
+	head
+		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		meta(name='description', content='')
+		meta(name='author', content='')	
+		link(rel='shortcut icon', href='/ico/favicon.png')
+
+		title= title
+
+		// Bootstrap core CSS
+		link(rel='stylesheet', href='/css/bootstrap.min.css')	
+
+		// Font-awesome CSS
+		link(rel='stylesheet', href='/font-awesome/css/font-awesome.min.css')	
+
+		// if lt IE 7
+			link(rel='stylesheet', href='/font-awesome/css/font-awesome-ie7.min.css')	
+
+		// Custom styles for this template
+		link(rel='stylesheet', href='/css/style.css')	
+		
+		// if lt IE 9
+			script(src='/js/html5shiv.js')
+			script(src='/js/respond.min.js')
+	body
+		div#wrap
+			include includes/header
+			div.container
+				block content
+		include includes/footer
+		// Le javascript
+		// Placed at the end of the document so the pages load faster
+		script(src='/js/jquery.min.js')
+		script(src='/js/bootstrap.min.js')
+		script(src='/js/app.js')
