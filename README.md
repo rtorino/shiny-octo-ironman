@@ -1,4 +1,4 @@
 shiny-octo-ironman
 ==================
 
-repository for my node mini project
+repository for my mini node project
