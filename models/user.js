@@ -3,9 +3,9 @@
  */
 
 var mongoose = require('mongoose');
-var hash = require('../util/hash');
+var pass = require('pwd');
 
-UserSchema = mongoose.Schema({
+UserSchema = new mongoose.Schema({
 	firstName: 	String,
 	lastName: 	String,
 	email: 			String,
@@ -15,7 +15,7 @@ UserSchema = mongoose.Schema({
 
 UserSchema.statics.signup = function (email, password, done) {
 	var User = this;
-	hash(password, function (err, salt, hash) {
+	pass.hash(password, function (err, salt, hash) {
 		if (err) throw err;
 
 		User.create({
@@ -38,7 +38,7 @@ UserSchema.statics.isValidUserPassword = function (email, password, done) {
 			return done(null, false, { message : 'Incorrect email.' });
 		}
 
-		hash(password, user.salt, function (err, hash) {
+		pass.hash(password, user.salt, function (err, hash) {
 			if (err) return done(err);
 
 			if (hash == user.hash) {

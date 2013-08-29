@@ -6,7 +6,7 @@ var User = require('../models/user');
 var Auth = require('./middlewares/authorization');
 
 module.exports = function (app, passport) {
-	app.get('/', function(req, res){ 
+	app.get('/', function (req, res){ 
 		if(req.isAuthenticated()){
 		  res.render('home', { user : req.user }); 
 		}else{
@@ -40,4 +40,4 @@ module.exports = function (app, passport) {
 			});
 		});
 	});	
-}
+};

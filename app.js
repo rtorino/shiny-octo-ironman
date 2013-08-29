@@ -17,6 +17,7 @@ var config = require('./config/config')[env];
 
 // connect to MongoDB
 mongoose.connect(config.db);
+console.log('connected to database');
 
 // require all models
 var modelsDir = path.join(__dirname, '/models');

@@ -6,7 +6,7 @@ exports.isAuthenticated = function (req, res, next) {
 	} else {
 		res.redirect('/login');
 	}
-}
+};
 
 exports.userExist = function (req, res, next) {
 	User.count({ email : req.body.email }, function (err, count) {
@@ -16,4 +16,4 @@ exports.userExist = function (req, res, next) {
 			res.redirect('/signup');
 		}
 	});
-}
+};
