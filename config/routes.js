@@ -19,5 +19,5 @@ module.exports = function (app, passport) {
 	);
 
 	app.get('/', home.index); 
-	app.post('/logout', users.logout);
+	app.get('/logout', users.logout);
 };

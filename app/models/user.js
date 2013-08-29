@@ -33,7 +33,7 @@ UserSchema.statics.signup = function (email, password, done) {
 UserSchema.statics.isValidUserPassword = function (email, password, done) {
 	this.findOne({ email : email }, function (err, user) {
 		if (err) return done(err);
-
+		console.log(user);
 		if (!user) {
 			return done(null, false, { message : 'Incorrect email.' });
 		}
@@ -44,7 +44,7 @@ UserSchema.statics.isValidUserPassword = function (email, password, done) {
 			if (hash == user.hash) {
 				return done(null, user);
 			} else {
-				done(null, false, { message : 'Incorrect password.' });
+				return done(null, false, { message : 'Incorrect password.' });
 			}
 		});
 	});

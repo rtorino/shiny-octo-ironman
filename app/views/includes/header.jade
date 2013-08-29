@@ -9,14 +9,20 @@ div.navbar.navbar-inverse.navbar-fixed-top
 		div.collapse.navbar-collapse
 			ul.nav.navbar-nav 
 			ul.nav.navbar-nav.navbar-right
-				if user !== undefined
+				if user !== null
 					li.dropdown
 						a.dropdown-toggle(href='#', data-toggle='dropdown')
 							| #{user.email}  
 							b.caret
 						ul.dropdown-menu
 							li
-								a(href='#') Logout
+								a(href='/edit') 
+									i.icon-pencil
+									|  Edit
+							li
+								a(href='/logout') 
+									i.icon-off
+									|  Logout
 				else
 					li
 						a(href='/login') Login

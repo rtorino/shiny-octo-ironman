@@ -37,7 +37,8 @@ exports.postUserCreate = function (req, res, next) {
  */
 exports.getUserLogin = function (req, res) {
 	res.render('users/login', {
-		title: 'Log in'
+		title: 'Log in',
+		user: null
 	});
 };
 
