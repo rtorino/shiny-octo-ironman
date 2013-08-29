@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -17,14 +16,11 @@ var config = require('./config/config')[env];
 
 // connect to MongoDB
 mongoose.connect(config.db);
-console.log('connected to database');
 
 // require all models
-var modelsDir = path.join(__dirname, '/models');
+var modelsDir = path.join(__dirname, '/app/models');
 fs.readdirSync(modelsDir).forEach(function (file) {
-	if (file[0] === '.') return;
-
-	require(modelsDir + '/' + file);
+	if (~file.indexOf('.js')) require(modelsDir + '/' + file);
 });
 
 // require passport config
@@ -34,7 +30,7 @@ var app = express();
 
 // all environments
 app.set('port', process.env.PORT || 3000);
-app.set('views', __dirname + '/views');
+app.set('views', config.root + '/app/views');
 app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
@@ -46,7 +42,7 @@ app.use(passport.session());
 app.use(express.methodOverride());
 app.use(express.session());
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(config.root + '/public'));
 
 // development only
 if ('development' == app.get('env')) {
