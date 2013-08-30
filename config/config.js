@@ -3,14 +3,14 @@ var rootPath = path.normalize(__dirname + '/..');
 
 module.exports = {
 	development: {
-		db: 'mongodb://localhost:27017/shiny-octo-ironman',
+		db: 'mongodb://localhost:27017/shiny',
 		root: rootPath,
 		app: {
 			name: 'Shiny Octo Ironman'
 		}	
 	},
 	test: {
-		db: 'mongodb://localhost:27017/shiny-octo-ironman',
+		db: 'mongodb://localhost:27017/shiny',
 		root: rootPath,
 		app: {
 			name: 'Shiny Octo Ironman'

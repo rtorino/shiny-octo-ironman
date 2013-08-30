@@ -5,11 +5,11 @@ div.navbar.navbar-inverse.navbar-fixed-top
 				span.icon-bar
 				span.icon-bar
 				span.icon-bar
-			a(href='#', class='navbar-brand') Shiny Octo Ironman
+			a(href='/', class='navbar-brand') Shiny Octo Ironman
 		div.collapse.navbar-collapse
 			ul.nav.navbar-nav 
 			ul.nav.navbar-nav.navbar-right
-				if user !== null
+				if (user !== null)
 					li.dropdown
 						a.dropdown-toggle(href='#', data-toggle='dropdown')
 							| #{user.email}  
@@ -24,5 +24,4 @@ div.navbar.navbar-inverse.navbar-fixed-top
 									i.icon-off
 									|  Logout
 				else
-					li
-						a(href='/login') Login
+					a.button.btn.btn-default.navbar-btn(href='/login') Sign in

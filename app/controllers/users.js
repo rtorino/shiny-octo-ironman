@@ -12,6 +12,7 @@ var utils = require('../../lib/utils');
 exports.getUserCreate = function (req, res) {
 	res.render('users/signup', {
 		title: 'Sign up',
+		info: req.flash('info'),
 		user: null
 	});
 };
@@ -20,7 +21,6 @@ exports.getUserCreate = function (req, res) {
  * Create user
  */
 exports.postUserCreate = function (req, res, next) {
-	console.log(req.body);
 	User.signup(req.body.email, req.body.password, function (err, user) {
 		if (err) throw err;
 
@@ -33,11 +33,24 @@ exports.postUserCreate = function (req, res, next) {
 };
 
 /**
+ * Session 
+ */
+exports.session = function (req, res) {
+	if (req.session.returnTo) {
+		res.redirect(req.session.returnTo);
+		delete req.session.returnTo;
+	} else {
+		res.redirect('/');
+	}
+};
+
+/**
  * Show login form
  */
 exports.getUserLogin = function (req, res) {
 	res.render('users/login', {
 		title: 'Log in',
+		errors: req.flash('error'),
 		user: null
 	});
 };

@@ -13,9 +13,10 @@ module.exports = function (app, passport) {
 	app.get('/login', users.getUserLogin);
 	app.post('/login' 
 		, passport.authenticate('local', {
-			successRedirect : '/',
-			failureRedirect : '/login',
+			failureRedirect: '/login',
+			failureFlash: true
 		})
+		, users.session
 	);
 
 	app.get('/', home.index); 
