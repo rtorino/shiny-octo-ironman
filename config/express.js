@@ -3,12 +3,11 @@
  */
 
 var express = require('express');
-var mongoStore = require('connect-mongo')(express);
 var flash = require('connect-flash');
 var helpers = require('view-helpers');
 var pkg = require('../package.json');
 
-module.exports = function (app, config, passport) {
+module.exports = function (app, config, passport, store) {
 
   app.set('showStackError', true);
 
@@ -48,11 +47,9 @@ module.exports = function (app, config, passport) {
 
     // express/mongo session storage
     app.use(express.session({
-      secret: 'noobjs',
-      store: new mongoStore({
-        url: config.db,
-        collection : 'sessions'
-      })
+      secret: 'dirty',
+      key: 'express.sid',
+      store: store
     }));
 
     // use passport session

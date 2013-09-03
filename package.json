@@ -16,7 +16,7 @@
     "pwd": "0.0.2",
     "view-helpers": "~0.1.2",
     "connect-mongo": "~0.3.3",
-    "passport.socketio": "~1.2.1",
-    "socket.io": "~0.9.16"
+    "socket.io": "~0.9.16",
+    "passport.socketio": "~1.2.1"
   }
 }

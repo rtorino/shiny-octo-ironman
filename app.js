@@ -1,8 +1,11 @@
 /**
  * Module dependencies.
  */
-
+//http://stackoverflow.com/questions/13095418/how-to-use-passport-with-express-and-socket-io
+//http://stackoverflow.com/questions/15093018/sessions-with-express-js-passport-js
 var express = require('express');
+var MemoryStore = express.session.MemoryStore;
+var mongoStore = require('connect-mongo')(express);
 var path = require('path');
 var fs = require('fs');
 var mongoose = require('mongoose');
@@ -28,8 +31,10 @@ fs.readdirSync(modelsDir).forEach(function (file) {
 require('./config/passport')(passport, config);
 
 var app = express();
+//var store = new mongoStore({ url : config.db, collection : 'sessions' });
+var store = new MemoryStore();
 // express settings
-require('./config/express')(app, config, passport);
+require('./config/express')(app, config, passport, store);
 
 // Bootstrap routes
 require('./config/routes')(app, passport);
@@ -45,20 +50,32 @@ var sio = socketio.listen(server);
 var clients = {};
 var socketsOfClients = {};
 
-/*sio.set('authorizaion', passportSocketIo.authorize({
-	cookieParser: express.cookieParser,	//or connect.cookieParser
-	key: 'express.sid',									//the cookie where express (or connect) stores the session  id.
-	secret: 'my session secret',				//the session secret to parse the cookie
-	store: mySessionStore,							//the session store that express uses
-	fail: function (data, accept) {			// *optional* callbacks on success or fail
-		accept(null, false);							// second parameter takes boolean on whether or not to allow handshake
-	},
-	success: function (data, accept) {
-		accept(null, true);
-	}
-}));*/
+sio.set('authorization', passportSocketIo.authorize({
+  cookieParser: express.cookieParser,  //or connect.cookieParser
+  key: 'express.sid',                  //the cookie where express (or connect) stores the session id.
+  secret: 'dirty',                     //the session secret to parse the cookie
+  store: store,                        //the session store that express uses
+  fail: function (data, accept) {      // *optional* callbacks on success or fail
+    accept(null, false);               // second parameter takes boolean on whether or not to allow handshake
+  },
+  success: function (data, accept) {
+    accept(null, true);
+  }
+}));
 
-sio.sockets.on('connection', function(socket) {
+// upon connection, start a periodic task that emits (every 1s) the current timestamp
+sio.sockets.on('connection', function (socket) {
+  console.log('user connected');
+  var sender = setInterval(function () {
+    socket.emit('data', new Date().getTime());
+  }, 1000);
+
+  socket.on('disconnect', function() {
+    clearInterval(sender);
+  });
+});
+
+/*sio.sockets.on('connection', function(socket) {
   socket.on('set username', function(userName) {
     // Is this an existing user name?
     if (clients[userName] == undefined) {
@@ -106,7 +123,7 @@ sio.sockets.on('connection', function(socket) {
     // relay this message to all the clients
     userLeft(uName);
   });
-});
+});*/
 
 function userJoined(uName) {
   Object.keys(socketsOfClients).forEach(function(sId) {
