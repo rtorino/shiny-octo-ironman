@@ -50,18 +50,20 @@ var sio = socketio.listen(server);
 var clients = {};
 var socketsOfClients = {};
 
-sio.set('authorization', passportSocketIo.authorize({
-  cookieParser: express.cookieParser,  //or connect.cookieParser
-  key: 'express.sid',                  //the cookie where express (or connect) stores the session id.
-  secret: 'dirty',                     //the session secret to parse the cookie
-  store: store,                        //the session store that express uses
-  fail: function (data, accept) {      // *optional* callbacks on success or fail
-    accept(null, false);               // second parameter takes boolean on whether or not to allow handshake
-  },
-  success: function (data, accept) {
-    accept(null, true);
-  }
-}));
+sio.configure(function () {
+  sio.set('authorization', passportSocketIo.authorize({
+    cookieParser: express.cookieParser,  //or connect.cookieParser
+    key: 'express.sid',                  //the cookie where express (or connect) stores the session id.
+    secret: 'dirty',                     //the session secret to parse the cookie
+    store: store,                        //the session store that express uses
+    fail: function (data, accept) {      // *optional* callbacks on success or fail
+      accept(null, false);               // second parameter takes boolean on whether or not to allow handshake
+    },
+    success: function (data, accept) {
+      accept(null, true);
+    }
+  }));
+});
 
 // upon connection, start a periodic task that emits (every 1s) the current timestamp
 sio.sockets.on('connection', function (socket) {
