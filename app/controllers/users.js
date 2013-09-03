@@ -13,7 +13,7 @@ exports.getUserCreate = function (req, res) {
 	res.render('users/signup', {
 		title: 'Sign up',
 		info: req.flash('info'),
-		user: null
+		user: new User()
 	});
 };
 
@@ -21,9 +21,15 @@ exports.getUserCreate = function (req, res) {
  * Create user
  */
 exports.postUserCreate = function (req, res, next) {
-	User.signup(req.body.email, req.body.password, function (err, user) {
-		if (err) throw err;
-
+	User.signup(req.body.username, req.body.email, req.body.password, function (err, user) {
+		if (err) {
+		  return res.render('users/signup', {
+      	errors: utils.errors(err.errors),
+      	user: user,
+      	title: 'Sign up'
+  		});
+		}
+		// login user automatically after sign up  
 		req.login(user, function (err) {
 			if (err) return next(err);
 
@@ -50,8 +56,7 @@ exports.session = function (req, res) {
 exports.getUserLogin = function (req, res) {
 	res.render('users/login', {
 		title: 'Log in',
-		errors: req.flash('error'),
-		user: null
+		errors: req.flash('error')
 	});
 };
 
@@ -62,6 +67,48 @@ exports.logout = function (req, res) {
 	req.logout();
 	res.redirect('/');
 };
+
+/**
+ * Show user profile
+ */
+exports.showProfile = function (req, res) {
+	var user = req.profile;
+	res.render('users/profile', {
+		title: 'Profile',
+		user: user
+	});
+}
+
+/**
+ * Update user profile
+ */
+exports.updateProfile = function (req, res, next) {
+	User.update(req, function (err, updated) {
+		if (err) {
+		  return res.render('users/profile', {
+      	errors: utils.errors(err.errors),
+      	user: user,
+      	title: 'Profile'
+  		});
+		} else {
+			res.redirect('/');
+		}
+	});
+};
+
+/**
+ * Find user by id
+ */ 
+ exports.user = function (req, res, next, id) {
+ 	User
+ 		.findOne({ _id : id })
+ 		.exec(function (err, user) {
+ 			if (err) return next(err);
+ 			if (!user) return (new Error('Faile to load User' + id));
+			req.profile = user;
+			next(); 			
+ 		});
+ }
 
 
 

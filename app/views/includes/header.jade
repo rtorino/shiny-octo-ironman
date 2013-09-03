@@ -5,23 +5,23 @@ div.navbar.navbar-inverse.navbar-fixed-top
 				span.icon-bar
 				span.icon-bar
 				span.icon-bar
-			a(href='/', class='navbar-brand') Shiny Octo Ironman
+			a(href='/', class='navbar-brand') DIRTy!
 		div.collapse.navbar-collapse
 			ul.nav.navbar-nav 
 			ul.nav.navbar-nav.navbar-right
-				if (user !== null)
+				if (req.isAuthenticated())
 					li.dropdown
 						a.dropdown-toggle(href='#', data-toggle='dropdown')
 							| #{user.email}  
 							b.caret
 						ul.dropdown-menu
 							li
-								a(href='/edit') 
+								a(href="/users/"+req.user.id) 
 									i.icon-pencil
-									|  Edit
+									| &nbsp;Edit Profile
 							li
-								a(href='/logout') 
+								a(href="/logout") 
 									i.icon-off
-									|  Logout
+									| &nbsp;Logout
 				else
-					a.button.btn.btn-default.navbar-btn(href='/login') Sign in
+					a.button.btn.btn-default.navbar-btn(href='/signin') Sign in

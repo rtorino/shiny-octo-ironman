@@ -1,11 +1,14 @@
 var User = require('../../app/models/user');
 
+/**
+ * Generic require login middleware 
+ */
 exports.isAuthenticated = function (req, res, next) {
-	if (req.isAuthenticated()) {
-		next();
-	} else {	
-		res.redirect('/login');
-	}
+	if (!req.isAuthenticated()) {
+		req.session.returnTo = req.originalUrl;
+    return res.redirect('/login');	
+	} 
+	next();	
 };
 
 exports.userExist = function (req, res, next) {

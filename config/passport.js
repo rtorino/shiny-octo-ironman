@@ -7,6 +7,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var User = mongoose.model('User');
 
 module.exports = function (passport, config) {
+	// serialize sessions
 	passport.serializeUser(function (user, done) {
 		done(null, user.id);
 	});
@@ -17,10 +18,11 @@ module.exports = function (passport, config) {
 		});
 	});
 
+	// use local strategy
 	passport.use(new LocalStrategy({
-		usernameField : 'email',
+		usernameField : 'username',
 		passwordField : 'password'
-	}, function (email, password, done) {
-		User.isValidUserPassword(email, password, done);
+	}, function (username, password, done) {
+		User.isValidUserPassword(username, password, done);
 	}));
 };

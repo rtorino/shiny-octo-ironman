@@ -2,7 +2,7 @@ extends ../layouts/default
 
 block content
 	div.row
-		div.col-md-6.col-md-offset-3
+		div.col-md-4.col-md-offset-4
 			div.panel.panel-default
 				div.panel-heading
 					div.panel-title
@@ -11,13 +11,17 @@ block content
 					include ../includes/messages
 					form.form-horizontal(role='form', action='/signup', method='POST')
 						div.form-group
-							label.col-sm-2.control-label(for='email') Email
-							div.col-sm-10
-								input#email.form-control(type='email', name='email', placeholder='Email')
+							div.col-sm-12
+								input#username.form-control(type='text', name='username', placeholder='Pick a username')
 						div.form-group
-							label.col-sm-2.control-label(for='password') Password
-							div.col-sm-10
-								input#password.form-control(type='password', name='password' placeholder='Password')
+							div.col-sm-12
+								input#email.form-control(type='email', name='email', placeholder='Your email')
 						div.form-group
-							div.col-sm-offset-2.col-sm-10
+							div.col-sm-12
+								input#password.form-control(type='password', name='password' placeholder='Create a password')
+						div.form-group
+							div.col-sm-12
 								button.btn.btn-success(type='submit') Sign up
+								&nbsp;
+								| Already have an account?&nbsp;
+								a(href="/signin") Sign in

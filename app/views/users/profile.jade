@@ -1,6 +1,23 @@
-if user.name
-	h1 #{user.name}'s Profile
-else
-	h1 #{user.email}'s Profile
+extends ../layouts/default
 
-a(href="/logout") Logout
+block content
+	div.row
+		div.col-md-8.col-md-offset-2
+			div.panel.panel-default
+				div.panel-heading
+					div.panel-title
+						| Profile
+				div.panel-body
+					include ../includes/messages
+					form(role='form', action='/users/update', method='POST')
+						div.form-group
+							label(for="firstname") Firstname
+							input#firstname.form-control(type='text', name='firstname', value=(typeof user.firstname !== 'undefined') ? '#{user.firstname}' : '')
+						div.form-group
+							label(for="lastname") Lastname
+							input#lastname.form-control(type='text', name='lastname', value=(typeof user.lastname !== 'undefined') ? '#{user.lastname}' : '')
+						div.form-group	
+							label(for="email") Email Address
+							input#email.form-control(type='email', name='email', value='#{user.email}')
+						div.form-group
+							button.btn.btn-success(type='submit') Save Changes
