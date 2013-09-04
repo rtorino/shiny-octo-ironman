@@ -39,12 +39,7 @@ require('./config/express')(app, config, passport, store);
 // Bootstrap routes
 require('./config/routes')(app, passport);
 
-// Start the application by listening on port <>
-var port = process.env.PORT || 3000;
-var server = http.createServer(app).listen(port, function(){
-  console.log('Express server listening on port ' + port);
-});
-
+var server = http.createServer(app);
 var sio = socketio.listen(server);
 
 var clients = {};
@@ -67,7 +62,6 @@ sio.configure(function () {
 
 // upon connection, start a periodic task that emits (every 1s) the current timestamp
 sio.sockets.on('connection', function (socket) {
-  console.log('user connected');
   var sender = setInterval(function () {
     socket.emit('data', new Date().getTime());
   }, 1000);
@@ -75,6 +69,12 @@ sio.sockets.on('connection', function (socket) {
   socket.on('disconnect', function() {
     clearInterval(sender);
   });
+});
+
+// Start the application by listening on port <>
+var port = process.env.PORT || 3000;
+server.listen(port, function(){
+  console.log('Express server listening on port ' + port);
 });
 
 /*sio.sockets.on('connection', function(socket) {
