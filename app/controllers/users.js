@@ -71,7 +71,7 @@ exports.logout = function (req, res) {
 /**
  * Show user profile
  */
-exports.showProfile = function (req, res) {
+exports.show = function (req, res) {
 	var user = req.profile;
 	res.render('users/profile', {
 		title: 'Profile',
@@ -82,7 +82,7 @@ exports.showProfile = function (req, res) {
 /**
  * Update user profile
  */
-exports.updateProfile = function (req, res, next) {
+exports.update = function (req, res, next) {
 	User.update(req, function (err, updated) {
 		if (err) {
 		  return res.render('users/profile', {

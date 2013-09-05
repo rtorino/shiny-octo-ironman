@@ -1,0 +1,24 @@
+extends ../layouts/default
+
+block content
+	div.row
+		div.col-lg-12
+			div.panel.panel-default
+				div.panel-heading
+					div.panel-title
+						| Canvas
+				div.panel-body
+					div.btn-toolbar
+						div.btn-group
+							button.btn.btn-primary
+								i.icon-picture
+							button.btn.btn-primary
+								i.icon-save
+						div.btn-group
+							button#pencil.btn.btn-primary
+								i.icon-pencil
+							button.btn.btn-primary
+								i.icon-eraser
+					hr
+					div.content
+						canvas#canvas

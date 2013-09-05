@@ -21,9 +21,9 @@ module.exports = function (app, passport) {
 		})
 		, users.session
 	);
-	app.get('/users/:userId', users.showProfile);
-	app.post('/users/update', users.updateProfile);
+	app.get('/users/:id', Auth.isAuthenticated, users.show);
+	app.post('/users/:id', Auth.isAuthenticated, users.update);
 	app.get('/logout', users.logout);
 
-	app.param('userId', users.user);
+	app.param('id', users.user);
 };

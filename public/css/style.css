@@ -30,10 +30,26 @@ body {
 /* Not required for template or sticky footer method. */
 
 #wrap > .container {
-  padding: 70px 15px 0;
+  padding: 60px 15px 0;
 }
+
 .container .credit {
   margin: 20px 0;
+}
+
+.content {
+  height: 500px;
+  background-color: #f5f5f5;
+  color: #efefef;
+}
+
+.content > #canvas {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
 }
 
 #footer > .container {
@@ -42,5 +58,5 @@ body {
 }
 
 code {
-  font-size: 80%;
+  font-size:80%;
 }

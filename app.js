@@ -1,8 +1,6 @@
 /**
  * Module dependencies.
  */
-//http://stackoverflow.com/questions/13095418/how-to-use-passport-with-express-and-socket-io
-//http://stackoverflow.com/questions/15093018/sessions-with-express-js-passport-js
 var express = require('express');
 var MemoryStore = express.session.MemoryStore;
 var mongoStore = require('connect-mongo')(express);
@@ -62,12 +60,13 @@ sio.configure(function () {
 
 // upon connection, start a periodic task that emits (every 1s) the current timestamp
 sio.sockets.on('connection', function (socket) {
+  console.log("user connected: ", socket.handshake.user.username);
   var sender = setInterval(function () {
     socket.emit('data', new Date().getTime());
   }, 1000);
 
   socket.on('disconnect', function() {
-    clearInterval(sender);
+    //clearInterval(sender);
   });
 });
 

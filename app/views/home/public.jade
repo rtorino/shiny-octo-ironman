@@ -1,0 +1,30 @@
+extends ../layouts/default
+
+block content
+	div.jumbotron
+		div.container
+			div.row
+				div.col-lg-8
+					h1 DIRTy!
+					p This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
+					p
+						a.btn.btn-primary.btn-lg Read more »
+				div.col-lg-4
+					div.panel.panel-default
+						div.panel-heading
+							div.panel-title
+								| Sign up
+						div.panel-body
+							form.form-horizontal(role='form', action='/signup', method='POST')
+								div.form-group
+									div.col-sm-12
+										input#username.form-control(type='text', name='username', placeholder='Pick a username')
+								div.form-group
+									div.col-sm-12
+										input#email.form-control(type='email', name='email', placeholder='Your email')
+								div.form-group
+									div.col-sm-12
+										input#password.form-control(type='password', name='password' placeholder='Create a password')
+								div.form-group
+									div.col-sm-12
+										button.btn.btn-block.btn-success(type='submit') Sign up for DIRTy
