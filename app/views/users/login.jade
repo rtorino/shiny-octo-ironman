@@ -2,14 +2,14 @@ extends ../layouts/default
 
 block content
 	div.row
-		div.col-md-4.col-md-offset-4
+		div.col-md-6.col-md-offset-3
 			div.panel.panel-default
 				div.panel-heading
 					div.panel-title
 						| Sign in
 				div.panel-body
 					include ../includes/messages
-					form.form-horizontal(role='form', action='/signin', method='post')
+					form.form-horizontal(role='form', action='/signin', method='POST')
 						div.form-group
 							div.col-sm-12
 								input#username.form-control(type='text', name='username', placeholder='Your username')

@@ -2,9 +2,9 @@
  * Module dependencies
  */
 
-var mongoose = require('mongoose');
-var User = mongoose.model('User');
-var utils = require('../../lib/utils');
+var mongoose = require('mongoose')
+var User = mongoose.model('User')
+var utils = require('../../lib/utils')
 
 /**
  * Show sign up form
@@ -14,8 +14,8 @@ exports.getUserCreate = function (req, res) {
 		title: 'Sign up',
 		info: req.flash('info'),
 		user: new User()
-	});
-};
+	})
+}
 
 /**
  * Create user
@@ -23,32 +23,39 @@ exports.getUserCreate = function (req, res) {
 exports.postUserCreate = function (req, res, next) {
 	User.signup(req.body.username, req.body.email, req.body.password, function (err, user) {
 		if (err) {
-		  return res.render('users/signup', {
-      	errors: utils.errors(err.errors),
+			if (typeof err.errors === 'object') {
+				err = utils.errors(err.errors)	
+			} else {
+				err = err.message
+			}
+
+			return res.render('users/signup', {
+      	errors: err,
       	user: user,
       	title: 'Sign up'
-  		});
+  		})
 		}
+
 		// login user automatically after sign up  
 		req.login(user, function (err) {
 			if (err) return next(err);
 
 			return res.redirect('/');
-		});
-	});
-};
+		})
+	})
+}
 
 /**
  * Session 
  */
 exports.session = function (req, res) {
 	if (req.session.returnTo) {
-		res.redirect(req.session.returnTo);
-		delete req.session.returnTo;
+		res.redirect(req.session.returnTo)
+		delete req.session.returnTo
 	} else {
-		res.redirect('/');
+		res.redirect('/')
 	}
-};
+}
 
 /**
  * Show login form
@@ -57,16 +64,16 @@ exports.getUserLogin = function (req, res) {
 	res.render('users/login', {
 		title: 'Log in',
 		errors: req.flash('error')
-	});
-};
+	})
+}
 
 /**
  * Logout user
  */
 exports.logout = function (req, res) {
-	req.logout();
-	res.redirect('/');
-};
+	req.logout()
+	res.redirect('/')
+}
 
 /**
  * Show user profile
@@ -76,7 +83,7 @@ exports.show = function (req, res) {
 	res.render('users/profile', {
 		title: 'Profile',
 		user: user
-	});
+	})
 }
 
 /**
@@ -89,12 +96,12 @@ exports.update = function (req, res, next) {
       	errors: utils.errors(err.errors),
       	user: user,
       	title: 'Profile'
-  		});
+  		})
 		} else {
 			res.redirect('/');
 		}
-	});
-};
+	})
+}
 
 /**
  * Find user by id
@@ -103,11 +110,11 @@ exports.update = function (req, res, next) {
  	User
  		.findOne({ _id : id })
  		.exec(function (err, user) {
- 			if (err) return next(err);
- 			if (!user) return (new Error('Faile to load User' + id));
-			req.profile = user;
-			next(); 			
- 		});
+ 			if (err) return next(err)
+ 			if (!user) return (new Error('Failed to load User' + id))
+			req.profile = user
+			next() 			
+ 		})
  }
 
 

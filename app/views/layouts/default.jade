@@ -18,6 +18,12 @@ html(lang='en')
 		// if lt IE 7
 			link(rel='stylesheet', href='/font-awesome/css/font-awesome-ie7.min.css')	
 
+		// Bootstrap color picker
+		link(rel='stylesheet', href='/css/colorpicker.css')	
+
+		// Bootstrap slider
+		link(rel='stylesheet', href='/css/slider.css')	
+
 		// Custom styles for this template
 		link(rel='stylesheet', href='/css/style.css')	
 		
@@ -36,5 +42,8 @@ html(lang='en')
 		script(src='/js/bootstrap.min.js')
 		script(src='/socket.io/socket.io.js')
 		script(src='/js/fabric.js')
+		script(src='/js/underscore.js')
+		script(src='/js/bootstrap-colorpicker.js')
+		script(src='/js/bootstrap-slider.js')
 		if (req.isAuthenticated())
 			script(src='/js/app.js')

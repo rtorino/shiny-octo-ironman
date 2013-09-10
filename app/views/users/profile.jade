@@ -9,7 +9,7 @@ block content
 						| Profile
 				div.panel-body
 					include ../includes/messages
-					form(role='form', action='/users/update', method='POST')
+					form(role='form', action='/users/'+req.user.id, method='POST')
 						div.form-group
 							label(for="firstname") Firstname
 							input#firstname.form-control(type='text', name='firstname', value=(typeof user.firstname !== 'undefined') ? '#{user.firstname}' : '')

@@ -12,7 +12,7 @@ module.exports = function (app, passport) {
 
 	// user routes
 	app.get('/signup', users.getUserCreate);
-	app.post('/signup', Auth.userExist, users.postUserCreate);
+	app.post('/signup', users.postUserCreate);
 	app.get('/signin', users.getUserLogin);
 	app.post('/signin' 
 		, passport.authenticate('local', {

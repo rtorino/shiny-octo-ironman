@@ -16,7 +16,7 @@ exports.userExist = function (req, res, next) {
 		if (count === 0) {
 			next();
 		} else {
-			req.flash('info', 'Email already exists.');
+			req.flash('info', 'Email already exists');
 			res.redirect('/signup');
 		}
 	});

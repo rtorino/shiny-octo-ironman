@@ -2,23 +2,27 @@ extends ../layouts/default
 
 block content
 	div.row
-		div.col-lg-12
+		div.col-lg-9
 			div.panel.panel-default
 				div.panel-heading
 					div.panel-title
-						| Canvas
+						| Board
 				div.panel-body
-					div.btn-toolbar
-						div.btn-group
-							button.btn.btn-primary
-								i.icon-picture
-							button.btn.btn-primary
-								i.icon-save
-						div.btn-group
-							button#pencil.btn.btn-primary
-								i.icon-pencil
-							button.btn.btn-primary
-								i.icon-eraser
-					hr
 					div.content
-						canvas#canvas
+						canvas#canvas(width='816', height='600')
+		div.col-lg-3
+			div.panel.panel-default.chat
+				div.panel-heading
+					div.panel-title
+						| People
+				div.panel-body.contacts		
+					ul#people-list.list-group
+		div.col-lg-3
+			div.panel.panel-default.chat
+				div.panel-heading
+					div.panel-title
+						| Chat
+				div.panel-body.conversation
+					ul#message-list.list-group
+					input#message.form-control(type='text', placeholder='Type message here...')
+				

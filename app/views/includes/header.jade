@@ -1,15 +1,35 @@
 div.navbar.navbar-inverse.navbar-fixed-top
 	div.container
-		div.navbar-header
-			button(type='button', class='navbar-toggle', data-toggle='collapse', data-target='.navbar-collapse')
-				span.icon-bar
-				span.icon-bar
-				span.icon-bar
-			a(href='/', class='navbar-brand') DIRTy!
-		div.collapse.navbar-collapse
-			ul.nav.navbar-nav 
-			ul.nav.navbar-nav.navbar-right
-				if (req.isAuthenticated())
+		if (req.isAuthenticated())
+			div.navbar-header
+				button(type='button', class='navbar-toggle', data-toggle='collapse', data-target='.navbar-collapse')
+					span.icon-bar
+					span.icon-bar
+					span.icon-bar
+				a(href='/', class='navbar-brand') DIRTy App
+			div.collapse.navbar-collapse
+				if (req.route.path == '/')
+					ul.nav.navbar-nav 
+						div.btn-toolbar(style='margin-top: 5px')
+							div.btn-group
+								button.btn.btn-primary
+									i.icon-file
+								button#rasterize-to-image.btn.btn-primary
+									i.icon-save
+							div#drawing-tools.btn-group
+								button#selector.btn.btn-primary
+									i.icon-move
+								button#pencil.btn.btn-primary
+									i.icon-pencil
+								button#eraser.btn.btn-primary
+									i.icon-eraser
+								button#clear.btn.btn-primary
+									i.icon-trash
+							div#drawing-settings.btn-group
+								button#color-picker.btn.btn-primary(data-color='rgb(0, 0, 0)', data-color-format='rgb')
+									i.icon-hand-up
+								input.col-sm-6(type='text', id='slider')
+				ul.nav.navbar-nav.navbar-right
 					li.dropdown
 						a.dropdown-toggle(href='#', data-toggle='dropdown')
 							| #{user.email}  
@@ -23,5 +43,13 @@ div.navbar.navbar-inverse.navbar-fixed-top
 								a(href="/logout") 
 									i.icon-signout
 									| &nbsp;Logout
-				else
+		else
+			div.navbar-header
+				button(type='button', class='navbar-toggle', data-toggle='collapse', data-target='.navbar-collapse')
+					span.icon-bar
+					span.icon-bar
+					span.icon-bar
+				a(href='/', class='navbar-brand') DIRTy App
+			div.collapse.navbar-collapse
+				ul.nav.navbar-nav.navbar-right
 					a.button.btn.btn-default.navbar-btn(href='/signin') Sign in
