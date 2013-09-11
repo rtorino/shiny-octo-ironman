@@ -34,7 +34,7 @@
 
   function FreeDrawing (socket) {
     this.socket = socket;
-    this.$canvas = canvas;
+    this.canvas = canvas;
     this.$canvasToImage = $('#rasterize-to-image');
     this.$selector = $('#selector');
     this.$pencil = $('#pencil');
@@ -66,71 +66,71 @@
         alert('This browser doesn\'t provide means to serialize canvas to an image');
       }
       else {
-        window.open(_this.$canvas.toDataURL('png'));
+        window.open(_this.canvas.toDataURL('png'));
       }
     });
 
     // toggle canvas drawing mode
     this.$selector.click(function (evt) {
       if ($(this).hasClass('active')) {
-        _this.$canvas.isDrawingMode = true;    
+        _this.canvas.isDrawingMode = true;    
       } else {
-        _this.$canvas.isDrawingMode = false;
+        _this.canvas.isDrawingMode = false;
       }
     });
 
     // toggle canvas drawing mode
     this.$pencil.click(function (evt) {
       if ($(this).hasClass('active')) {
-        _this.$canvas.isDrawingMode = false;    
+        _this.canvas.isDrawingMode = false;    
       } else {
-        _this.$canvas.isDrawingMode = true;
+        _this.canvas.isDrawingMode = true;
       }    
     });
 
     // toggle canvas drawing mode
     this.$eraser.click(function (evt) {
       if ($(this).hasClass('active')) {
-        _this.$canvas.isDrawingMode = true;    
+        _this.canvas.isDrawingMode = true;    
       } else {
-        _this.$canvas.isDrawingMode = false;
+        _this.canvas.isDrawingMode = false;
       }
     });
 
     // toggle canvas drawing mode
     this.$clear.click(function (evt) {
-      _this.$canvas.clear();
+      _this.canvas.clear();
       _this.setDefaults();
-      _this.socket.emit('data', { data : JSON.stringify(_this.$canvas) });
+      _this.socket.emit('data', { data : JSON.stringify(_this.canvas) });
     });
 
     this.$colorPicker.on('changeColor', function (evt){
-      _this.$canvas.freeDrawingBrush.color = evt.color.toHex();
+      _this.canvas.freeDrawingBrush.color = evt.color.toHex();
     });
 
     this.$penWidthAdjuster.on('slide', function (evt) {
-      _this.$canvas.freeDrawingBrush.width = parseInt(evt.value, 10) || 1;
+      _this.canvas.freeDrawingBrush.width = parseInt(evt.value, 10) || 1;
     });
 
-    this.$canvas.on('object:selected', function () {
+    this.canvas.on('object:selected', function () {
       if (_this.$eraser.hasClass('active')) {
-        _this.$canvas.remove(_this.$canvas.getActiveObject());
+        _this.canvas.remove(_this.canvas.getActiveObject());
       }
     });
 
     // emit data to server on path created
-    this.$canvas.on('path:created', function () {
-      _this.socket.emit('data', { data : JSON.stringify(_this.$canvas) });
+    this.canvas.on('path:created', function () {
+      _this.socket.emit('data', { data : JSON.stringify(_this.canvas) });
     });
 
     // emit data to server on object removed
-    this.$canvas.on('object:removed', function () {
-      _this.socket.emit('data', { data : JSON.stringify(_this.$canvas) });
+    this.canvas.on('object:removed', function () {
+      _this.socket.emit('data', { data : JSON.stringify(_this.canvas) });
     });
 
     // emit data to server on object modified
-    this.$canvas.on('object:modified', function () {
-      _this.socket.emit('data', { data : JSON.stringify(_this.$canvas) });
+    this.canvas.on('object:modified', function () {
+      _this.socket.emit('data', { data : JSON.stringify(_this.canvas) });
     });
 
     $('#drawing-tools button').click(function () {
@@ -155,14 +155,13 @@
 
   FreeDrawing.prototype.setDefaults = function () {
     this.$selector.addClass('active');
-    this.$canvas.isDrawingMode = false;
-    this.$canvas.freeDrawingBrush.width = this.$penWidthAdjuster.value || 1;
+    this.canvas.isDrawingMode = false;
   };
 
   FreeDrawing.prototype.loadFromJSON = function (drawing) {
-    this.$canvas.clear();
-    this.$canvas.loadFromJSON(drawing.data);
-    this.$canvas.renderAll();
+    this.canvas.clear();
+    this.canvas.loadFromJSON(drawing.data);
+    this.canvas.renderAll();
   };
 
   FreeDrawing.prototype.addPeople = function (username) {

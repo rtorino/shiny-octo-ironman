@@ -30,8 +30,8 @@ fs.readdirSync(modelsDir).forEach(function (file) {
 require('./config/passport')(passport, config)
 
 var app = express()
-//var store = new mongoStore({ url : config.db, collection : 'sessions' });
-var store = new MemoryStore()
+var store = new mongoStore({ url : config.db, collection : 'sessions' });
+//var store = new MemoryStore()
 // express settings
 require('./config/express')(app, config, passport, store)
 
