@@ -14,7 +14,7 @@ This application can have multiple use cases (e.g. online classroom, discuss pro
 **NOTE:** You need to have node.js, mongodb and installed and running.
 
 ```sh
-  $ git clone git://github.com/madhums/nodejs-express-mongoose-demo.git
+  $ git clone https://github.com/rtorino/shiny-octo-ironman.git
   $ npm install
   $ npm start
 ```
@@ -42,13 +42,11 @@ Then visit [http://localhost:3000/](http://localhost:3000/)
 -app/
   |__controllers/
   |__models/
-  |__mailer/
   |__views/
 -config/
   |__routes.js
   |__config.js
   |__passport.js (auth config)
-  |__imager.js (imager config)
   |__express.js (express.js configs)
   |__middlewares/ (custom middlewares)
 -public/
