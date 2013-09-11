@@ -49,6 +49,8 @@ Then visit [http://localhost:3000/](http://localhost:3000/)
   |__passport.js (auth config)
   |__express.js (express.js configs)
   |__middlewares/ (custom middlewares)
+-lib/
+  |__utils.js
 -public/
 ```
 
