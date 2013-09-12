@@ -99,7 +99,7 @@ server.listen(port, function(){
 function userNameAvailable(socketId, username) {
   setTimeout(function(){ 
     sio.sockets.sockets[socketId].emit('user welcome', {
-      "currentUsers": JSON.stringify(Object.keys(clients))
+     "currentUsers": JSON.stringify(Object.keys(clients))
     });
   }, 500);
 }

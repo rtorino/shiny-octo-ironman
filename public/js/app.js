@@ -5,10 +5,28 @@
   socket.on('connect', function (){
     console.info('successfully established a working and authorized connection');
 
+    // initialize FreeDrawing object
     var freeDrawing = new FreeDrawing(socket);
 
+    // load data from locaStorage
+    var canvasDrawing = $.jStorage.get("dirty-canvas-drawing", null);
+    var chatMessages = $.jStorage.get("dirty-chat-messages", null);
+    var messages = [];
+
+    if (canvasDrawing) {
+      freeDrawing.loadFromJSON(canvasDrawing);
+    }
+
+    if (chatMessages) {
+      $.each(chatMessages, function (index, message) {
+        messages.push(message);
+        freeDrawing.appendNewMessage(message);
+      });
+    }
+
     socket.on('data', function (data) {
-      freeDrawing.loadFromJSON(data.drawing);
+      $.jStorage.set("dirty-canvas-drawing", data.drawing.data);
+      freeDrawing.loadFromJSON(data.drawing.data);
     });
 
     socket.on('user welcome', function (data) {
@@ -24,6 +42,8 @@
     });
 
     socket.on('message', function (message) {
+      messages.push(message);
+      $.jStorage.set("dirty-chat-messages", messages);
       freeDrawing.appendNewMessage(message);
     });
   }); 
@@ -101,6 +121,7 @@
     this.$clear.click(function (evt) {
       _this.canvas.clear();
       _this.setDefaults();
+      $.jStorage.set("dirty-canvas-drawing", JSON.stringify(_this.canvas));
       _this.socket.emit('data', { data : JSON.stringify(_this.canvas) });
     });
 
@@ -120,16 +141,37 @@
 
     // emit data to server on path created
     this.canvas.on('path:created', function () {
+      $.jStorage.set("dirty-canvas-drawing", JSON.stringify(_this.canvas));
+      _this.socket.emit('data', { data : JSON.stringify(_this.canvas) });
+    });
+
+    // emit data to server while moving object
+    this.canvas.on('object:moving', function () {
+      $.jStorage.set("dirty-canvas-drawing", JSON.stringify(_this.canvas));
+      _this.socket.emit('data', { data : JSON.stringify(_this.canvas) });
+    });
+
+    // emit data to server while rotating object
+    this.canvas.on('object:rotating', function () {
+      $.jStorage.set("dirty-canvas-drawing", JSON.stringify(_this.canvas));
+      _this.socket.emit('data', { data : JSON.stringify(_this.canvas) });
+    });
+
+    // emit data to server while scaling object
+    this.canvas.on('object:scaling', function () {
+      $.jStorage.set("dirty-canvas-drawing", JSON.stringify(_this.canvas));
       _this.socket.emit('data', { data : JSON.stringify(_this.canvas) });
     });
 
     // emit data to server on object removed
     this.canvas.on('object:removed', function () {
+      $.jStorage.set("dirty-canvas-drawing", JSON.stringify(_this.canvas));
       _this.socket.emit('data', { data : JSON.stringify(_this.canvas) });
     });
 
     // emit data to server on object modified
     this.canvas.on('object:modified', function () {
+      $.jStorage.set("dirty-canvas-drawing", JSON.stringify(_this.canvas));
       _this.socket.emit('data', { data : JSON.stringify(_this.canvas) });
     });
 
@@ -143,7 +185,7 @@
         if (_this.$messageInput.val() === '') {
           return false;
         } else {
-          _this.socket.emit('message', { message : _this.$messageInput.val() });
+          _this.socket.emit('message', { message : _this.$messageInput.val()});
           _this.$messageInput.val('');
           e.stopPropagation();
           e.stopped = true;
@@ -158,14 +200,15 @@
     this.canvas.isDrawingMode = false;
   };
 
-  FreeDrawing.prototype.loadFromJSON = function (drawing) {
+  FreeDrawing.prototype.loadFromJSON = function (data) {
     this.canvas.clear();
-    this.canvas.loadFromJSON(drawing.data);
+    this.canvas.loadFromJSON(data);
     this.canvas.renderAll();
   };
 
   FreeDrawing.prototype.addPeople = function (username) {
     this.$peopleList.append(this.peopleTpl({ "username" : username }));
+    $('#online-users').text($('#people-list > li').length);
   }
 
   FreeDrawing.prototype.appendNewMessage = function (message) {
@@ -175,6 +218,7 @@
 
   FreeDrawing.prototype.handleUserLeft = function (username) {
     $("#people-list li:contains('" + username + "')").remove();
+    $('#online-users').text($('#people-list > li').length);
   }
 
   FreeDrawing.prototype.setCurrentUsers = function (users) {

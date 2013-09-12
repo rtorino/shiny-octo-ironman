@@ -21,7 +21,7 @@
     "npm":  "1.3.x"
   },
   "scripts": {
-    "start": "NODE_ENV=development ./node_modules/.bin/nodemon server.js"
+    "start": "supervisor -i public/ app.js"
   },
   "dependencies": {
     "express": "3.3.5",
@@ -39,6 +39,6 @@
     "underscore": "~1.5.2"
   },
   "devDependencies": {
-    "nodemon": "latest"
+    "supervisor": "latest"
   }
 }
