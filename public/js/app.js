@@ -43,7 +43,7 @@
     this.$colorPicker = $('#color-picker').colorpicker();
     this.$penWidthAdjuster = $('#slider').slider({ min: 1, max : 100,  value: 1,
                                                   formater: function(value) {
-                                                    return 'Pen width: '+value;
+                                                    return value;
                                                   }
                                               });
     this.$peopleList = $('#people-list');

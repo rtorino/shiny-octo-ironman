@@ -1,5 +1,5 @@
 {
-  "name": "DIRTy Application",
+  "name": "dirty-app",
   "description": "A data intensive real-time Node.js application using HTML5 canvas API and Socket.IO",
   "keywords": [
     "express",
@@ -18,7 +18,7 @@
   },
   "engines": {
     "node": "0.10.x",
-    "npm":  "1.2.x"
+    "npm":  "1.3.x"
   },
   "scripts": {
     "start": "NODE_ENV=development ./node_modules/.bin/nodemon server.js"

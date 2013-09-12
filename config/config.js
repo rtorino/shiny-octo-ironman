@@ -6,7 +6,7 @@ module.exports = {
 		db: 'mongodb://localhost:27017/dirty',
 		root: rootPath,
 		app: {
-			name: 'Shiny Octo Ironman'
+			name: 'DIRTy'
 		}	
 	},
 	test: {
@@ -20,7 +20,7 @@ module.exports = {
 		db: process.env.MONGOLAB_URI || process.env.MONGOHQ_URL,
 		root: rootPath,
 		app: {
-			name: 'Shiny Octo Ironman'
+			name: 'DIRTy'
 		}
 	}
 };
