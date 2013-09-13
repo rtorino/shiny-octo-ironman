@@ -10,11 +10,15 @@ var utils = require('../../lib/utils')
  * Show sign up form
  */
 exports.getUserCreate = function (req, res) {
-	res.render('users/signup', {
-		title: 'Sign up',
-		info: req.flash('info'),
-		user: new User()
-	})
+	if (req.isAuthenticated()) {
+		res.redirect('/');
+	} else {
+		res.render('users/signup', {
+			title: 'Sign up',
+			info: req.flash('info'),
+			user: new User()
+		})
+	}	
 }
 
 /**
@@ -61,10 +65,14 @@ exports.session = function (req, res) {
  * Show login form
  */
 exports.getUserLogin = function (req, res) {
-	res.render('users/login', {
-		title: 'Log in',
-		errors: req.flash('error')
-	})
+	if (req.isAuthenticated()) {
+		res.redirect('/');
+	} else {
+		res.render('users/login', {
+			title: 'Log in',
+			errors: req.flash('error')
+		})
+	}
 }
 
 /**
